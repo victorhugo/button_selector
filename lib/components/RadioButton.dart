@@ -23,6 +23,7 @@ class RadioButton extends StatefulWidget {
     this.type = SelectionType.radio,
     this.titleStyle,
     this.radioStyle,
+    this.hideTitle = false,
   }) : super(key: key);
   final OnOptionTapped ontap;
   final int index;
@@ -34,12 +35,10 @@ class RadioButton extends StatefulWidget {
   final bool isSelected;
 
   final SelectionType type;
-
   final SelectorOrientation orientation;
-
   final TextStyle titleStyle;
-
   final RadioOptionStyle radioStyle;
+  final bool hideTitle;
 
   @override
   _RadioButtonState createState() => _RadioButtonState();
@@ -110,35 +109,54 @@ class _RadioButtonState extends State<RadioButton> {
                       : CustomPaint(
                           painter: CircleFillPainter(isSelected: false))),
               SizedBox(width: 10),
-              AutoSizeText(widget.option.data.description(),
-                  style: titleStyle,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  minFontSize: 10),
+              if (!widget.hideTitle)
+                AutoSizeText(widget.option.data.description(),
+                    style: titleStyle,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    minFontSize: 10),
               if (widget.icon != null)
-                SizedBox(height: 70, child: Image.asset(widget.icon)),
+                SizedBox(
+                    height: 70,
+                    child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Image.asset(widget.icon),
+                    )),
             ],
           ),
           //decoration: R.containerDecorationGradient(radius: 5),
         );
       }
       return Container(
-        color: isSelected
-            ? widget.radioStyle.selectedBackgroundColor
-            : widget.radioStyle.unselectedBackgroundColor,
+        decoration: BoxDecoration(
+            color: isSelected
+                ? widget.radioStyle.selectedBackgroundColor
+                : widget.radioStyle.unselectedBackgroundColor,
+            borderRadius: widget.radioStyle.showBorder
+                ? BorderRadius.all(Radius.circular(8))
+                : BorderRadius.zero,
+            border: Border.all(
+                color: widget.radioStyle.itemBorderColor != null
+                    ? widget.radioStyle.itemBorderColor
+                    : Colors.white)),
+
         alignment: Alignment.center,
         height: widget.icon == null ? widget.heightIcon : widget.heightNoIcon,
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AutoSizeText(widget.option.data.description(),
-                style: titleStyle,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                minFontSize: 10),
+            if (!widget.hideTitle)
+              AutoSizeText(widget.option.data.description(),
+                  style: titleStyle,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  minFontSize: 10),
             if (widget.icon != null)
-              SizedBox(height: 70, child: Image.asset(widget.icon)),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Image.asset(widget.icon))),
           ],
         ),
         //decoration: R.containerDecorationGradient(radius: 5),

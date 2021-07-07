@@ -12,11 +12,17 @@ class RadioOptionStyle {
   Color selectedLabelColor = Colors.white;
   Color unselectedLabelColor = Colors.white;
 
-  RadioOptionStyle.colors(
-      {this.selectedRadioColor,
-      this.unselectedRadioColor,
-      this.selectedBackgroundColor,
-      this.unselectedBackgroundColor,
-      this.selectedLabelColor,
-      this.unselectedLabelColor});
+  Color itemBorderColor = Colors.white;
+  bool showBorder = false;
+
+  RadioOptionStyle.colors({
+    this.selectedRadioColor,
+    this.unselectedRadioColor,
+    this.selectedBackgroundColor,
+    this.unselectedBackgroundColor,
+    this.selectedLabelColor,
+    this.unselectedLabelColor,
+    this.itemBorderColor,
+    this.showBorder,
+  });
 }

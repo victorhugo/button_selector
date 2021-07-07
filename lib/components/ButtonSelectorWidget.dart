@@ -17,7 +17,8 @@ class ButtonSelectorWidget extends StatefulWidget {
       this.separation = 0.0,
       this.selectionStyle = SelectionType.radio,
       this.labelStyle,
-      this.optionStyle})
+      this.optionStyle,
+      this.hideTitle = false})
       : super(key: key);
   final OptionTapped tapSelected;
   final List<OptionData> options;
@@ -27,6 +28,7 @@ class ButtonSelectorWidget extends StatefulWidget {
   final SelectionType selectionStyle;
   final TextStyle labelStyle;
   final RadioOptionStyle optionStyle;
+  final bool hideTitle;
 
   @override
   _ButtonSelectorWidgetState createState() => _ButtonSelectorWidgetState();
@@ -51,6 +53,7 @@ class _ButtonSelectorWidgetState extends State<ButtonSelectorWidget> {
           icon: icon,
           orientation: widget.orientation,
           type: widget.selectionStyle,
+          hideTitle: widget.hideTitle,
           radioStyle: widget.optionStyle,
           titleStyle: widget.labelStyle,
         );
@@ -64,6 +67,7 @@ class _ButtonSelectorWidgetState extends State<ButtonSelectorWidget> {
             orientation: widget.orientation,
             type: widget.selectionStyle,
             radioStyle: widget.optionStyle,
+            hideTitle: widget.hideTitle,
             titleStyle: widget.labelStyle);
         buttons.add(op);
       }
